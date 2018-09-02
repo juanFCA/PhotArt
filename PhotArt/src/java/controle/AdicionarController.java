@@ -22,20 +22,28 @@ import modelo.Avaliacao;
  *
  * @author alunoces
  */
-@WebServlet("/adicionar")
+@WebServlet(name = "AdicionarController", urlPatterns = {"/adicionar"})
 public class AdicionarController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        
-        String titulo = req.getParameter("titulo");
-        String usuario = req.getParameter("usuario");
-        String avaliacaoDes = req.getParameter("avaliacao");
+        HttpSession session = req.getSession(true);
+        RequestDispatcher rd;
+        
+        if(session.getAttribute("usuario") == null) {
+            req.setAttribute("erro", "Favor realize login para continuar");
+            rd = req.getRequestDispatcher("/login.jsp");
+            rd.forward(req, resp);
+        }
+        
+        String titulo = (String) req.getParameter("titulo");
+        String usuario = (String) req.getParameter("usuario");
+        String avaliacaoDes = (String) req.getParameter("avaliacao");
         int  nota = Integer.parseInt(req.getParameter("nota"));
         
         Avaliacao avaliacao = new Avaliacao(titulo, usuario, avaliacaoDes, nota);
         
-        HttpSession session = req.getSession(true);
         List<Avaliacao> avaliacoes = (List<Avaliacao>) session.getAttribute("avaliacoes");
         avaliacoes.add(avaliacao);
      
@@ -48,7 +56,7 @@ public class AdicionarController extends HttpServlet {
         session.setAttribute("avaliacoes", avaliacoes);
         session.setAttribute("media", media);
         
-        RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
+        rd = req.getRequestDispatcher("/index.jsp");
         rd.forward(req,resp);
         
     }

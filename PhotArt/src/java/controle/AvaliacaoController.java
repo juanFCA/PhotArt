@@ -16,12 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Avaliacao;
+import modelo.Usuario;
 
 /**
  *
  * @author alunoces
  */
-@WebServlet("/avaliacao")
+@WebServlet(name = "AvaliacaoController", urlPatterns = {"/avaliacao"})
 public class AvaliacaoController extends HttpServlet {
 
     @Override
@@ -30,13 +31,18 @@ public class AvaliacaoController extends HttpServlet {
 
         HttpSession session = req.getSession(true);
         List<Avaliacao> avaliacoes = (List<Avaliacao>) session.getAttribute("avaliacoes");
-        
-        if (avaliacoes == null) {
+        List<Usuario> usuarios = (List<Usuario>) session.getAttribute("usuario");
+
+        if (avaliacoes == null && usuarios == null) {
             avaliacoes =  new ArrayList<>();
+            usuarios = new ArrayList<>();
+            usuarios.add(new Usuario("admin","admin"));
             session.setAttribute("avaliacoes", avaliacoes);
+            session.setAttribute("usuarios", usuarios);
         }
         
         session.setAttribute("avaliacoes", avaliacoes);
+        session.setAttribute("usuarios", usuarios);
         
         RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
         dispatcher.forward(req, resp);

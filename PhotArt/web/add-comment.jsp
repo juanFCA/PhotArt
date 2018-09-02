@@ -62,7 +62,7 @@
                                 <div class="form-group">
                                     <label for="inputEmail4" class="col-sm-2 control-label">Usuário</label>
                                     <div class="col-sm-10">
-                                      <input type="text" name="usuario" class="form-control" id="inputEmail4" placeholder="@johndoe">
+                                        <input type="text" name="usuario" class="form-control" id="inputEmail4" placeholder="@johndoe" value="${sessionScope.usuario.nome}"> 
                                     </div>
                                 </div>
                                 <div class="form-group">

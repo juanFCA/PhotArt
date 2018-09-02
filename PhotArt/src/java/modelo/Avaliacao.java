@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.util.Objects;
+
 /**
  *
  * @author alunoces
@@ -56,6 +58,48 @@ public class Avaliacao {
 
     public void setNota(int nota) {
         this.nota = nota;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.titulo);
+        hash = 37 * hash + Objects.hashCode(this.usuario);
+        hash = 37 * hash + Objects.hashCode(this.avaliacao);
+        hash = 37 * hash + this.nota;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Avaliacao other = (Avaliacao) obj;
+        if (this.nota != other.nota) {
+            return false;
+        }
+        if (!Objects.equals(this.titulo, other.titulo)) {
+            return false;
+        }
+        if (!Objects.equals(this.usuario, other.usuario)) {
+            return false;
+        }
+        if (!Objects.equals(this.avaliacao, other.avaliacao)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Avaliacao{" + "titulo=" + titulo + ", usuario=" + usuario + ", avaliacao=" + avaliacao + ", nota=" + nota + '}';
     }
         
 }

@@ -3,8 +3,9 @@
     Created on : 27/08/2018, 21:12:12
     Author     : alunoces
 --%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -36,18 +37,23 @@
         <br />
         <div class="row vertical-offset-100">
             <div class="col-md-4 col-md-offset-4">
+                <c:if test="${not empty requestScope.erro}">
+                    <div class="alert alert-danger">
+                        <strong>${requestScope.erro}</strong> 
+                    </div>
+                </c:if>
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title">Autenticação</h3>
              </div>
               <div class="panel-body">
-                <form accept-charset="UTF-8" role="form">
+                  <form accept-charset="UTF-8" role="form" action="/photart/login" method="post">
                         <fieldset>
                     <div class="form-group">
-                      <input class="form-control" placeholder="E-mail" name="email" type="text">
+                      <input class="form-control" placeholder="E-mail" name="usuario" type="text">
                   </div>
                   <div class="form-group">
-                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                    <input class="form-control" placeholder="Password" name="senha" type="password" value="">
                   </div>
                   <div class="checkbox">
                       <label>
@@ -56,7 +62,7 @@
                     </div>
                   <input class="btn btn-lg btn-success btn-block" type="submit" value="Entrar">
                 </fieldset>
-                  </form>
+                </form>
               </div>
           </div>
         </div>
