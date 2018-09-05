@@ -57,7 +57,7 @@
                                         href="add-comment.jsp"
                                     </c:when>    
                                     <c:otherwise>
-                                        href="login.jsp"
+                                        href="/photart/login" 
                                     </c:otherwise>
                                 </c:choose> > <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Adicionar Avaliação </a>
                         </div>

@@ -25,28 +25,54 @@ import modelo.Usuario;
 public class LoginController extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
+    }
+
+    private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         
         HttpSession session = req.getSession(true);
         RequestDispatcher rd;
+        
+        if(session.getAttribute("usuario") == null && (
+            req.getParameter("usuario") == null || req.getParameter("senha") == null )) {
+            
+            req.setAttribute("erro", "Favor realize login para continuar");
+            rd = req.getRequestDispatcher("/login.jsp");
+            rd.forward(req, resp);
+            return;
+        }        
         
         String usuarioNome = (String) req.getParameter("usuario");
         String usuarioSenha = (String) req.getParameter("senha");
         
         List<Usuario> usuarios = (List<Usuario>) session.getAttribute("usuarios");
         
-        for(Usuario u : usuarios) {
-            if(u.getNome().equals(usuarioNome) && u.getSenha().equals(usuarioSenha)) {
-                Usuario usuario = new Usuario(usuarioNome, usuarioSenha);
-                session.setAttribute("usuario", usuario);
-                rd = req.getRequestDispatcher("/index.jsp");
-                rd.forward(req, resp);
-            } else {
-                req.setAttribute("erro", "Usuário ou Senha desconhecido.");
-                rd = req.getRequestDispatcher("/login.jsp");
-                rd.forward(req, resp);
-            }
+        boolean existe = verificarUsuario(usuarioNome, usuarioSenha, usuarios);
+        
+        if(existe) {
+            Usuario usuario = new Usuario(usuarioNome, usuarioSenha);
+            session.setAttribute("usuario", usuario);
+            rd = req.getRequestDispatcher("/index.jsp");
+            rd.forward(req, resp);
+        } else {
+            req.setAttribute("erro", "Usuário ou Senha desconhecido.");
+            rd = req.getRequestDispatcher("/login.jsp");
+            rd.forward(req, resp);
         }
     }
 
+    private boolean verificarUsuario(String nome, String senha, List<Usuario> usuarios) {
+        for(Usuario u : usuarios) {
+            if(nome.equals(u.getNome()) && senha.equals(u.getSenha())) {
+                return true;
+            } 
+        }
+        return false;
+    }
 }

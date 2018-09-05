@@ -32,9 +32,9 @@ public class AdicionarController extends HttpServlet {
         RequestDispatcher rd;
         
         if(session.getAttribute("usuario") == null) {
-            req.setAttribute("erro", "Favor realize login para continuar");
-            rd = req.getRequestDispatcher("/login.jsp");
+            rd = req.getRequestDispatcher("/photart/login");
             rd.forward(req, resp);
+            return;
         }
         
         String titulo = (String) req.getParameter("titulo");

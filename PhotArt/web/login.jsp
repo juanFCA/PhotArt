@@ -24,7 +24,6 @@
 
         <!-- Custom styles for this template -->
         <link href="css/jumbotron-narrow.css" rel="stylesheet">
-        
     </head>
 
     <body>
@@ -37,9 +36,10 @@
         <br />
         <div class="row vertical-offset-100">
             <div class="col-md-4 col-md-offset-4">
-                <c:if test="${not empty requestScope.erro}">
+                <%--<c:if test="${not empty requestScope.erro or not empty param.erro}">--%>
+                <c:if test="${not empty requestScope.erro }">
                     <div class="alert alert-danger">
-                        <strong>${requestScope.erro}</strong> 
+                        <strong>${requestScope.erro} <%--${param.erro}--%></strong> 
                     </div>
                 </c:if>
             <div class="panel panel-default">
@@ -50,10 +50,10 @@
                   <form accept-charset="UTF-8" role="form" action="/photart/login" method="post">
                         <fieldset>
                     <div class="form-group">
-                      <input class="form-control" placeholder="E-mail" name="usuario" type="text">
+                        <input class="form-control" placeholder="E-mail" name="usuario" required="" type="text">
                   </div>
                   <div class="form-group">
-                    <input class="form-control" placeholder="Password" name="senha" type="password" value="">
+                      <input class="form-control" placeholder="Password" name="senha" required="" type="password">
                   </div>
                   <div class="checkbox">
                       <label>
@@ -75,5 +75,5 @@
         <script src="https://use.fontawesome.com/45e03a14ce.js"></script>
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="js/ie10-viewport-bug-workaround.js"></script>
-    </body>
+   </body>
 </html>

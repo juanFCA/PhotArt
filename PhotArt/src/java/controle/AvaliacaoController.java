@@ -30,6 +30,7 @@ public class AvaliacaoController extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = req.getSession(true);
+        
         List<Avaliacao> avaliacoes = (List<Avaliacao>) session.getAttribute("avaliacoes");
         List<Usuario> usuarios = (List<Usuario>) session.getAttribute("usuario");
 
