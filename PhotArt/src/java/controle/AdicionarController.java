@@ -29,14 +29,7 @@ public class AdicionarController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        
         HttpSession session = req.getSession(true);
-        RequestDispatcher rd;
-        
-        if(session.getAttribute("usuario") == null) {
-            rd = req.getRequestDispatcher("/photart/login");
-            rd.forward(req, resp);
-            return;
-        }
-        
+
         String titulo = (String) req.getParameter("titulo");
         String usuario = (String) req.getParameter("usuario");
         String avaliacaoDes = (String) req.getParameter("avaliacao");
@@ -56,7 +49,7 @@ public class AdicionarController extends HttpServlet {
         session.setAttribute("avaliacoes", avaliacoes);
         session.setAttribute("media", media);
         
-        rd = req.getRequestDispatcher("/index.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
         rd.forward(req,resp);
         
     }

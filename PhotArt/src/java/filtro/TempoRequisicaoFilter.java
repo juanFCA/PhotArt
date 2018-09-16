@@ -6,6 +6,7 @@
 package filtro;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -40,7 +41,7 @@ public class TempoRequisicaoFilter implements Filter {
         long tempoFinal = System.currentTimeMillis();
         String uri = req.getRequestURI();
         
-        LOGGER.info("Tempo de resposta "+uri+": "+ (tempoFinal - tempoInicial) + "ms");
+        LOGGER.log(Level.INFO, "Tempo de resposta {0}: {1}ms", new Object[]{uri, tempoFinal - tempoInicial});
     }
 
     @Override

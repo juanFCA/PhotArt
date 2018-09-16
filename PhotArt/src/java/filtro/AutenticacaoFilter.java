@@ -6,6 +6,8 @@
 package filtro;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -15,6 +17,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import modelo.Avaliacao;
+import modelo.Usuario;
 
 /**
  *
@@ -32,9 +36,20 @@ public class AutenticacaoFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         //Cast para requisição HTTP
         HttpServletRequest req = (HttpServletRequest) request;
+       
+        List<Avaliacao> avaliacoes = (List<Avaliacao>) req.getSession().getAttribute("avaliacoes");
+        List<Usuario> usuarios = (List<Usuario>) req.getSession().getAttribute("usuarios");
+
+        if (avaliacoes == null && usuarios == null) {
+            avaliacoes =  new ArrayList<>();
+            usuarios = new ArrayList<>();
+            usuarios.add(new Usuario("admin","admin"));
+            req.getSession().setAttribute("avaliacoes", avaliacoes);
+            req.getSession().setAttribute("usuarios", usuarios);
+        }
+        
         //Se não for login, e o usuário não está logado, redireciona para login.jsp
         if(!"/photart/login".equals(req.getRequestURI()) && req.getSession(true).getAttribute("usuario") == null) {
-            
             request.setAttribute("erro", "Favor realizar login para continuar.");
             RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
             rd.forward(request, response);

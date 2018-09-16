@@ -38,16 +38,7 @@ public class LoginController extends HttpServlet {
         
         HttpSession session = req.getSession(true);
         RequestDispatcher rd;
-        
-        if(session.getAttribute("usuario") == null && (
-            req.getParameter("usuario") == null || req.getParameter("senha") == null )) {
-            
-            req.setAttribute("erro", "Favor realize login para continuar");
-            rd = req.getRequestDispatcher("/login.jsp");
-            rd.forward(req, resp);
-            return;
-        }        
-        
+       
         String usuarioNome = (String) req.getParameter("usuario");
         String usuarioSenha = (String) req.getParameter("senha");
         

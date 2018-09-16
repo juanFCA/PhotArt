@@ -32,21 +32,13 @@ public class AvaliacaoController extends HttpServlet {
         HttpSession session = req.getSession(true);
         
         List<Avaliacao> avaliacoes = (List<Avaliacao>) session.getAttribute("avaliacoes");
-        List<Usuario> usuarios = (List<Usuario>) session.getAttribute("usuario");
-
-        if (avaliacoes == null && usuarios == null) {
-            avaliacoes =  new ArrayList<>();
-            usuarios = new ArrayList<>();
-            usuarios.add(new Usuario("admin","admin"));
-            session.setAttribute("avaliacoes", avaliacoes);
-            session.setAttribute("usuarios", usuarios);
-        }
+        List<Usuario> usuarios = (List<Usuario>) session.getAttribute("usuarios");
         
         session.setAttribute("avaliacoes", avaliacoes);
         session.setAttribute("usuarios", usuarios);
         
         RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
         dispatcher.forward(req, resp);
+        
     }
-  
 }
